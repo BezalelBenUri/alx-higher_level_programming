@@ -1,8 +1,2 @@
-#!/usr/bin/python3
-
-"""
-This is a Python script that prints the message:
-"Programming is like building a multilingual puzzle"
-"""
+#!/usr/bin/python
 print("Programming is like building a multilingual puzzle")
-
