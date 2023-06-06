@@ -1,6 +1,6 @@
 #!/usr/bin/python3
-# 4-print_hexa.py
+# 2-print_alphabet.py
 
-"""Print numbers 0 to 98 in decimal and hexadecimal."""
-for number in range(0, 99):
-    print("{} = {}".format(number, hex(number)))
+"""Print the alphabet in lowercase, not followed by a new line."""
+for asciis in range(97, 123):
+    print("{}".format(chr(asciis)), end="")
