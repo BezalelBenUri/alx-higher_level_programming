@@ -1,14 +1,6 @@
 #!/bin/bash
 
-# Get the Python file name from the environment variable
 pyfile=$PYFILE
+pycfile="${pyfile%.*}.pyc"
 
-# Compile the Python script using the "-m py_compile" option
-python -m py_compile $pyfile
-
-# Get the base name of the Python file without the extension
-basename=$(basename $pyfile)
-filename="${basename%.*}"
-
-# Rename the compiled file to have the ".pyc" extension
-mv "${filename}.pyc" "${filename}c"
+python -m py_compile "$pyfile" -o "$pycfile"
