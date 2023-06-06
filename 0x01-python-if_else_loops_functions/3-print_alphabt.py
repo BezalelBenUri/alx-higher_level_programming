@@ -1,7 +1,5 @@
 #!/usr/bin/python3
 
-for char in range(97, 123):
-    if chr(char) not in ['q', 'e']:
-        print("{}".format(chr(char)), end="")
-
-print()
+for letter in range(97, 123):
+    if letter != 'q' and letter != 'e':
+        print(chr(letter), end="")
