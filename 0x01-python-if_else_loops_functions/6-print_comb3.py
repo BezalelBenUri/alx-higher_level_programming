@@ -11,4 +11,3 @@ for combo1 in range(0, 10):
             print("{}{}".format(combo1, combo2))
         else:
             print("{}{}".format(combo1, combo2), end=", ")
-
