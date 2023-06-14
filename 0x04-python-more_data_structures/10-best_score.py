@@ -10,14 +10,15 @@ def best_score(a_dictionary):
 
     """
 
-  # Get the maximum value in the dictionary.
-    max_value = max(a_dictionary.values())
+    if a_dictionary is None or len(a_dictionary) == 0:
+        return None
 
-  # Get the key of the maximum value.
+    max_score = float('-inf')
     best_key = None
+
     for key, value in a_dictionary.items():
-        if value == max_value:
-        best_key = key
-        break
+        if value > max_score:
+            max_score = value
+            best_key = key
 
     return best_key
