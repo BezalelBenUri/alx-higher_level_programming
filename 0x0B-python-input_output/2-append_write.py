@@ -1,4 +1,6 @@
 #!/usr/bin/python3
+"class that appends a text from a file"
+
 
 def append_write(filename="", text=""):
     """
