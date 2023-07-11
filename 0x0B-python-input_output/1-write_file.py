@@ -4,7 +4,7 @@
 
 def write_file(filename="", text=""):
     """
-    Writes a string to a text file and 
+    Writes a string to a text file and
     returns the number of characters written.
 
     Args:
