@@ -1,7 +1,14 @@
 #!/usr/bin/python3
-MyInt = __import__('100-my_int').MyInt
+"""Defines a class MyInt that inherits from int."""
 
-picked_int = MyInt(3)
-print(picked_int)
-print(picked_int == 3)
-print(picked_int != 3)
+
+class MyInt(int):
+    """Invert int operators == and !=."""
+
+    def __eq__(self, value):
+        """Override == opeartor with != behavior."""
+        return self.real != value
+
+    def __ne__(self, value):
+        """Override != operator with == behavior."""
+        return self.real == value
