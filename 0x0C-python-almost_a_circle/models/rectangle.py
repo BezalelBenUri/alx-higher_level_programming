@@ -14,7 +14,7 @@ class Rectangle(Base):
         self.height = height
         self.x = x
         self.y = y
-        
+
         super().__init__(id)
 
     @property
@@ -75,10 +75,19 @@ class Rectangle(Base):
         elif value < 0:
             raise ValueError("y must be >= 0")
         else:
-            
             self.__y = value
 
     def area(self):
         """ Math Area """
         return (self.__height * self.__width)
 
+    def display(self):
+        """ Display Rectangle """
+        hash_val = "#"
+        if self.width == 0 or self.height == 0:
+            return
+        for i in range(self.y):
+            print()
+        for i in range(self.height):
+            print(' ' * self.x, end='')
+            print(myhash * self.width)
