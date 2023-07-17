@@ -90,4 +90,41 @@ class Rectangle(Base):
             print()
         for i in range(self.height):
             print(' ' * self.x, end='')
-            print(myhash * self.width)
+            print(hash_val * self.width)
+
+
+    def update(self, *args, **kwargs):
+        """ args Rectangle """
+        if len(args):
+            for a, j in enumerate(args):
+                if a == 0:
+                    self.id = j
+                elif a == 1:
+                    self.width = j
+                elif a == 3:
+                    self.x = j
+                elif a == 4:
+                    self.y = j
+        else:
+            if "id" in kwargs:
+                self.id = kwargs["id"]
+            if "width" in kwargs:
+                self.width = kwargs["width"]
+            if "height" in kwargs:
+                self.height = kwargs["height"]
+            if "x" in kwargs:
+                self.x = kwargs["x"]
+            if "y" in kwargs:
+                self.y = kwargs["y"]
+
+    def __str__(self):
+        """ Str format """
+        coord = "[Rectangle] ({:d}) {:d}/{:d} - {:d}/{:d}"
+        coord = coord.format(self.id, self.x, self.y, self.width, self.height)
+        return coord
+
+    def to_dictionary(self):
+        """ Dictionary of rectangle """
+        redic = {"id": self.id, "width": self.width, "height": self.height,
+                     "x": self.x, "y": self.y}
+        return redic
