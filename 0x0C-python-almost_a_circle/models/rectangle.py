@@ -92,7 +92,6 @@ class Rectangle(Base):
             print(' ' * self.x, end='')
             print(hash_val * self.width)
 
-
     def update(self, *args, **kwargs):
         """ args Rectangle """
         if len(args):
@@ -125,6 +124,10 @@ class Rectangle(Base):
 
     def to_dictionary(self):
         """ Dictionary of rectangle """
-        redic = {"id": self.id, "width": self.width, "height": self.height,
-                     "x": self.x, "y": self.y}
+        redic = {
+                "id": self.id,
+                "width": self.width,
+                "height": self.height,
+                "x": self.x,
+                "y": self.y}
         return redic
