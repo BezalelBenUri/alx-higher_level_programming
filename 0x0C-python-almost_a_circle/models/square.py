@@ -1,7 +1,9 @@
 #!/usr/bin/python3
 """ Squeare that inherits """
 
+
 from models.rectangle import Rectangle
+
 
 class Square(Rectangle):
     """ Class Square """
