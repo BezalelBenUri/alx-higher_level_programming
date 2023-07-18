@@ -5,13 +5,13 @@ import rectangle
 
 
 class TestRectangle(unittest.TestCase):
-    def rectangle_outputtester(self):
-        
+
+    def test_rectangle_output(self):
         """Function to test the output the function rectangle"""
 
         self.assertAlmostEqual(rectangle(,)
 
-     def rectangle_inputester(self):
-        """Function to test the input the function rectangle"""
-
-        self.assertRaises(TypeError, rectangle, )
+    def test_rectangle_input(self):
+        """Function to test the input the function
+        rectangle"""
+        self.assertRaises(TypeError, rectangle)
