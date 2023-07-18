@@ -1,124 +1,100 @@
 #!/usr/bin/python3
-"""This is a Base class"""
+""" Base.py """
 import json
 import csv
+import turtle
 
 
 class Base:
-    """class Base"""
+    """ Base class of Project """
     __nb_objects = 0
 
     def __init__(self, id=None):
-        """initialize instance attributes
-        Args:
-            id (int): id of object
-        """
+        """ Constructor """
         if id is not None:
             self.id = id
         else:
             Base.__nb_objects += 1
-            self.id = Base.__nb_objects
+            self.id = self.__nb_objects
 
     @staticmethod
     def to_json_string(list_dictionaries):
-        """return JSON string representation of
-        list_dictionaries
-        Args:
-            list_dictionaries (obj): object
-        Returns:
-            JSON string representation of
-            list_dictionaries
-        """
-        if list_dictionaries is None or len(list_dictionaries) == 0:
+        """ JSON string """
+        if not list_dictionaries:
             return "[]"
+
         return json.dumps(list_dictionaries)
 
     @classmethod
     def save_to_file(cls, list_objs):
-        """writes the JSON string representation of list_objs to a file
-        Args:
-            cls (cls): class
-            list_objs (file): list of instances who inherits of Base
-        """
-        filename = "{:s}.json".format(cls.__name__)
-        content = []
+        """  JSON Save file """
+        rasterlist = []
+        filename = cls.__name__ + ".json"
+        if rasterlist_objs:
+            for a in rasterlist_objs:
+                rasterlist.append(a.to_dictionary())
 
-        if list_objs is not None:
-            for i in range(len(list_objs)):
-                content.append(cls.to_dictionary(list_objs[i]))
+        jost = cls.to_json_string(rasterlist)
+        with open(filename, "w", encoding="utf-8") as myfile:
+            myfile.write(jost)
 
-        with open(filename, mode="w", encoding="utf-8") as a_file:
-            a_file.write(cls.to_json_string(content))
+        @staticmethod
+        def from_json_string(json_string):
+            """ static method """
+            if not json_string or len(json_string) == 0:
+                return []
 
-    @staticmethod
-    def from_json_string(json_string):
-        """returns the list of the JSON string representation json_string
-        Args:
-            json_string (str): string representing a list of dictionaries
-        Returns:
-            list of json string
-        """
-        a_list = []
-        if json_string is not None and json_string != "":
-            a_list = json.loads(json_string)
-        return a_list
+        return json.loads(json_string)
 
-    @classmethod
-    def create(cls, **dictionary):
-        """returns an instance with all attributes already set
-        Args:
-            dictionary (dict): dictionary
-        Returns:
-            an instance with all attributes already set
-        """
-        if cls.__name__ == "Rectangle":
-            dummy = cls(1, 1)
-        if cls.__name__ == "Square":
-            dummy = cls(1)
-        dummy.update(**dictionary)
-        return dummy
-
-    @classmethod
-    def load_from_file_csv(cls):
-        """ Deserializes CSV and load """
-        filename = cls.__name__ + ".csv"
-        try:
-            with open(filename, encoding="utf-8") as myfile:
-                reader = csv.reader(myfile)
-                if cls.__name__ == "Rectangle":
-                    attrs = ["id", "width", "height", "x", "y"]
-                elif cls.__name__ == "Square":
-                    attrs = ["id", "size", "x", "y"]
-                    atrlist = []
-                    for row in reader:
-                        lst, dictn = 0, {}
-                        for a in row:
-                            dictn[attrs[lst]] = int(i)
-                            lst += 1
-                            atrlist.append(cls.create(**dic))
-                            return atrlist
-                        except IOError:
-                            return []
-
-    @classmethod
-    def save_to_file_csv(cls, list_objs):
-        """serializes in CSV
-        Args:
-            list_objs (list): list of objects
-        """
-        filename = "{:s}.csv".format(cls.__name__)
-        content = []
-        for i in range(len(list_objs)):
-            content.append(cls.to_dictionary(list_objs[i]))  # [{...}, {...}]
-
-        with open(filename, 'w') as a_file:
+        @classmethod
+        def create(cls, **dictionary):
+            """ class method """
             if cls.__name__ == "Rectangle":
-                fieldnames = ['id', 'width', 'height', 'x', 'y']
-            if cls.__name__ == "Square":
-                fieldnames = ['id', 'size', 'x', 'y']
-            writer = csv.DictWriter(a_file, fieldnames=fieldnames)
-            writer.writeheader()  # add keys
-            writer.writerows(content)
+                drag = cls(1, 1)
+            elif cls.__name__ == "Square":
+                drag = cls(1)
+                drag.update(**dictionary)
+                return drag
+
+        @classmethod
+        def load_from_file(cls):
+            """ load file """
+            filename = cls.__name__ + ".json"
+
+            try:
+                with open(filename, encoding="utf-8") as myfile:
+                    reader = myfile.read()
+                    dicrd = cls.from_json_string(reader)
+                    rastlist = []
+                    for i in dicrd:
+                        rastlist.append(cls.create(**i))
+                    return rastlist
+            except IOError:
+                return []
+
+        @classmethod
+        def save_to_file_csv(cls, list_objs):
+            """ Serializes CSV and saves """
+            filename = cls.__name__ + ".csv"
+            csvlist = []
+            if list_objs:
+                for i in list_objs:
+                    dicrd = i.to_dictionary()
+                    if cls.__name__ == "Rectangle":
+                        csvlist.append(
+                                [dicrd["id"],
+                                    dicrd["width"],
+                                    dicrd["height"],
+                                    dicrd["x"],
+                                    dicrd["y"]])
+
+                    elif cls.__name__ == "Square":
+                        csvlist.append([dic["id"], dicrd["size"],
+                                        dicrd["x"], dicrd["y"]])
+
+            with open(filename, "w", encoding="utf-8") as myfile:
+                wrtr = csv.writer(myfile)
+                wrtr.writerows(csvlist)
 
         @classmethod
         def load_from_file_csv(cls):
@@ -129,16 +105,16 @@ class Base:
                 with open(filename, encoding="utf-8") as myfile:
                     reader = csv.reader(myfile)
                     if cls.__name__ == "Rectangle":
-                        attrs = ["id", "width", "height", "x", "y"]
+                        attr = ["id", "width", "height", "x", "y"]
                     elif cls.__name__ == "Square":
-                        attrs = ["id", "size", "x", "y"]
-                    rastlist = []
+                        attr = ["id", "size", "x", "y"]
+                    inslist = []
                     for row in reader:
                         lst, dictn = 0, {}
                         for i in row:
-                            dictn[attrs[lst]] = int(i)
+                            dictn[attr[lst]] = int(i)
                             lst += 1
-                        rastlist.append(cls.create(**dictn))
-                    return rastlist
+                        inslist.append(cls.create(**dictn))
+                    return inslist
             except IOError:
                 return []
