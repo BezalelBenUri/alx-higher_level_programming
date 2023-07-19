@@ -1,55 +1,115 @@
 #!/usr/bin/python3
-""" First rectangle
+""" Module that contains class Rectangle,
+inheritance of class Base
 """
-
 from models.base import Base
 
 
 class Rectangle(Base):
-    """class Rectangle inherits from base
-    """
-    rect_dict = {'id': 'id', 'width': '_Rectangle__width',
-               'height': '_Rectangle__height',
-               'x': '_Rectangle__x', 'y': '_Rectangle__y'}
+    """ Class Rectangle """
 
     def __init__(self, width, height, x=0, y=0, id=None):
-        """method __init__ Initialization a Rectangle
-        """
-        super().__init__(id)
+        """ Initializes instances """
         self.width = width
         self.height = height
         self.x = x
         self.y = y
+        super().__init__(id)
 
-    def update(self, *args, **kwargs):
-        """method update
-        """
-        key_list = ['id', '_Rectangle__width', '_Rectangle__height',
-                    '_Rectangle__x', '_Rectangle__y']
-        KV_dict = {'id': 'id', 'width': '_Rectangle__width',
-                   'height': '_Rectangle__height',
-                   'x': '_Rectangle__x', 'y': '_Rectangle__y'}
-        for idx, idn in enumerate(args):
-            self.__dict__[key_list[idx]] = idn
-        if len(args) == 0:
-            for key, val in kwargs.items():
-                self.__dict__[rect_dict[key]] = val
+    @property
+    def width(self):
+        """ width getter """
+        return self.__width
 
-    def __str__(self):
-        """method __str__
-        """
+    @width.setter
+    def width(self, value):
+        """ width setter """
+        if type(value) is not int:
+            raise TypeError("width must be an integer")
+        if value <= 0:
+            raise ValueError("width must be > 0")
+        self.__width = value
 
-        return ("[Rectangle] ({}) {}/{} - {}/{}".format(self.id, self.__x,
-                self.__y, self.__width, self.__height))
+    @property
+    def height(self):
+        """ height getter """
+        return self.__height
+
+    @height.setter
+    def height(self, value):
+        """ height setter """
+        if type(value) is not int:
+            raise TypeError("height must be an integer")
+        if value <= 0:
+            raise ValueError("height must be > 0")
+        self.__height = value
+
+    @property
+    def x(self):
+        """ x getter """
+        return self.__x
+
+    @x.setter
+    def x(self, value):
+        """ x setter """
+        if type(value) is not int:
+            raise TypeError("x must be an integer")
+        if value < 0:
+            raise ValueError("x must be >= 0")
+        self.__x = value
+
+    @property
+    def y(self):
+        """ y getter """
+        return self.__y
+
+    @y.setter
+    def y(self, value):
+        """ y setter """
+        if type(value) is not int:
+            raise TypeError("y must be an integer")
+        if value < 0:
+            raise ValueError("y must be >= 0")
+        self.__y = value
 
     def area(self):
-        """public_method area of rectangle
-        """
-        return self.__width * self.__height
+        """ returns the area of the rectangle object """
+        return self.width * self.height
 
     def display(self):
-        """public method display self prints in stdout #
-        """
-        print("\n" * (self.__y), end="")
-        for i in range(self.__height):
-            print(" " * self.__x + "#" * self.__width)
+        """ displays a rectangle """
+        rect = self.y * "\n"
+        for a in range(self.height):
+            rect += (" " * self.x)
+            rect += ("#" * self.width) + "\n"
+
+        print(rect, end='')
+
+    def __str__(self):
+        """ str special method """
+        str_rect = "[Rectangle] "
+        str_id = "({}) ".format(self.id)
+        str_xy = "{}/{} - ".format(self.x, self.y)
+        str_wh = "{}/{}".format(self.width, self.height)
+
+        return str_rect + str_id + str_xy + str_wh
+
+    def update(self, *args, **kwargs):
+        """ update method """
+        if args is not None and len(args) is not 0:
+            vi_attrs = ['id', 'width', 'height', 'x', 'y']
+            for i in range(len(args)):
+                setattr(self, vi_attrs[i], args[i])
+        else:
+            for key, value in kwargs.items():
+                setattr(self, key, value)
+
+    def to_dictionary(self):
+        """ method that returs a dictionary with properties """
+        vi_attrs = ['id', 'width', 'height', 'x', 'y']
+        dict_res = {}
+
+        for key in vi_attrs:
+            dict_res[key] = getattr(self, key)
+
+        return dict_res
