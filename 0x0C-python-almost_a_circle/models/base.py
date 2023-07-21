@@ -73,28 +73,21 @@ class Base:
                 return []
 
         @classmethod
-        def save_to_file_csv(cls, list_objs):
-            """ Serializes CSV and saves """
-            filename = cls.__name__ + ".csv"
-            csvlist = []
-            if list_objs:
-                for i in list_objs:
-                    dicrd = i.to_dictionary()
-                    if cls.__name__ == "Rectangle":
-                        csvlist.append(
-                                [dicrd["id"],
-                                    dicrd["width"],
-                                    dicrd["height"],
-                                    dicrd["x"],
-                                    dicrd["y"]])
+        def save_to_file(cls, list_objs):
+        """ Save object in a file """
+        fileid = "{}.json".format(cls.__name__)
+        list_dic = []
 
-                    elif cls.__name__ == "Square":
-                        csvlist.append([dic["id"], dicrd["size"],
-                                        dicrd["x"], dicrd["y"]])
+        if not list_objs:
+            pass
+        else:
+            for i in range(len(list_objs)):
+                list_dic.append(list_objs[i].to_dictionary())
 
-            with open(filename, "w", encoding="utf-8") as myfile:
-                wrtr = csv.writer(myfile)
-                wrtr.writerows(csvlist)
+        jlists = cls.to_json_string(list_dic)
+
+        with open(fileid, 'w') as f:
+            f.write(jlists)
 
         @classmethod
         def load_from_file_csv(cls):
