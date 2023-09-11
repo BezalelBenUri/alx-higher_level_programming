@@ -1,8 +1,3 @@
 #!/usr/bin/node
-
-const array = process.argv.slice(2);
-if (array[0] === undefined) {
-  console.log('No argument');
-} else {
-  console.log(array[0]);
-}
+const count = process.argv.length;
+console.log(count === 2 ? 'No argument' : count === 3 ? 'Argument found' : 'Arguments found');
