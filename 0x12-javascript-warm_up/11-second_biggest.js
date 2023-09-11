@@ -5,6 +5,6 @@ if (process.argv.length <= 3) {
 } else {
   const args = process.argv.map(Number)
     .slice(2, process.argv.length)
-    .sort((a, b) => a - b);
+    .sort((m, n) => m - n);
   console.log(args[args.length - 2]);
 }
