@@ -1,8 +1,8 @@
-#!/usr/bin/bash
+#!/usr/bin/python3
 """  fetches X-Request-Id """
-from sys import argv
 import requests
+from sys import argv
 
-if __name__ == __main__:
-    requests.get(argv[1])
-    print(r.headers.get("X-Request-Id"))
+if __name__ == "__main__":
+    rd = requests.get(argv[1])
+    print(rd.headers.get('X-Request-Id'))
